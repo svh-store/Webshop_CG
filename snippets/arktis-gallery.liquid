@@ -1,6 +1,8 @@
 {%- assign gallery_id = section.id | append: '-gallery' -%}
 {%- assign media_list = product.media -%}
 {%- assign first_media = media_list | first -%}
+{{ 'arktis-gallery.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arktis-gallery.js' | asset_url }}" defer></script>
 
 <div class="ag" id="{{ gallery_id }}" data-product-handle="{{ product.handle }}">
   <div class="ag_grid">
