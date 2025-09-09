@@ -83,7 +83,11 @@
     .active .media-xr-button:not([data-shopify-xr-hidden]) { display: block; }
   {%- endif -%}
 
-  
+  {%- if section.settings.media_size == 'large' -%}
+    @media (min-width: {{ breakpoint_lg }}px) {
+      :root { --product-info-width: 800px !important; }
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 {%- if first_3d_model -%}
