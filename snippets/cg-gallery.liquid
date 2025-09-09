@@ -1,5 +1,9 @@
 {%- assign gallery_id = section.id | append: '-gallery' -%}
-{%- assign first_media = product.media | first -%}
+{%- assign first_media =
+  product.selected_or_first_available_variant.featured_media
+  | default: product.featured_media
+  | default: product.media | first
+-%}
 
 <div class="pgc" id="{{ gallery_id }}">
   <div class="pgc__stage">
