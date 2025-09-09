@@ -37,6 +37,8 @@
 .media-gallery__viewer {
   border: none;
   background-color: transparent;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .media-viewer,
@@ -97,7 +99,10 @@
 .media-gallery__thumbs {
   margin-top: var(--media-gap);
 }
-
+.media-thumbs {
+  justify-content: center;
+  gap: var(--space-unit);
+}
 .media-thumbs__item {
   flex: 0 0 84px;
 }
