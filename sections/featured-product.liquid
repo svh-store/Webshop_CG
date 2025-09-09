@@ -48,15 +48,6 @@
   assign first_3d_model = product.media | where: 'media_type', 'model' | first
   assign media_ratio = section.settings.media_ratio
 
-  if media_ratio == 'natural'
-    assign media_ratio = 99
-    for media in product.media
-      if media.preview_image.aspect_ratio < media_ratio
-        assign media_ratio = media.preview_image.aspect_ratio
-      endif
-    endfor
-  endif
-
   assign color_scheme = section.settings.color_scheme
   assign bg_color = false
 
