@@ -1,8 +1,8 @@
 {%- comment -%}
   Parameters:
   - media {Object} - Media object.
-  - media_ratio {Number} - Media aspect ratio.
-  - media_crop {String} - If media should crop to fill available space (Options: none, top, center)
+  - media_ratio {Number} - Media aspect ratio (optional, defaults to natural).
+  - media_crop {String} - If media should crop to fill available space (unused, defaults to none)
   - loop {Boolean} - Enable video looping.
   - lazy_load {Boolean} - Lazy load the media.
   - enable_zoom {Boolean} - Whether zoom should be enabled or not
@@ -14,7 +14,7 @@
   {% render 'product-media',
     media: media,
     media_ratio: media_ratio,
-    media_crop: 'top',
+    media_crop: 'none',
     loop: section.settings.enable_video_looping,
     lazy_load: false,
     enable_zoom: true,
@@ -24,6 +24,9 @@
 {%- endcomment -%}
 
 {%- liquid
+  assign media_ratio = media.preview_image.aspect_ratio
+  assign media_crop = 'none'
+
   if featured_product
     assign widths = '536, 800, 1072, 1280'
     assign src_width = 1280
@@ -80,17 +83,7 @@
     endif
   endif
 
-  if section.settings.media_ratio != 'natural'
-    if media_crop == 'top'
-      assign img_class = 'product-image img-fit object-top w-full'
-    elsif media_crop == 'center'
-      assign img_class = 'product-image img-fit w-full'
-    else
-      assign img_class = 'product-image img-fit img-fit--contain w-full'
-    endif
-  else
-    assign img_class = 'product-image img-fit img-fit--contain w-full'
-  endif
+  assign img_class = 'product-image img-fit img-fit--contain'
 
   if enable_zoom
     case zoom_level
@@ -142,7 +135,7 @@
     %}
 
     {%- if enable_zoom -%}
-        <img class="zoom-image{% if media_crop == "none" %} zoom-image--contain top-0{% endif %} absolute left-0 right-0 pointer-events-none js-zoom-image no-js-hidden"
+        <img class="zoom-image zoom-image--contain absolute left-0 right-0 pointer-events-none js-zoom-image no-js-hidden"
              alt="{{ media.alt | escape }}"
              src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20{{ zoom_level }}%20{{ zoom_level | divided_by: media_ratio }}'%3E%3C/svg%3E" loading="lazy"
              data-src="{{ image_url }}" width="{{ zoom_level }}" height="{{ zoom_level | divided_by: media_ratio }}"

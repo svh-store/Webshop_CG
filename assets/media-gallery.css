@@ -37,6 +37,8 @@
 .media-gallery__viewer {
   border: 1px solid var(--gallery-border-color);
   background-color: var(--gallery-bg-color);
+  max-width: 1400px;
+  margin-inline: auto;
 }
 
 .media-viewer,
@@ -223,16 +225,19 @@ product-model[loaded] .media-poster {
   }
   .product-image.img-fit--contain,
   .zoom-image--contain {
+    top: 50%;
     left: 50%;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
-    height: 100%;
-    transform: translatex(-50%);
+    height: auto;
+    transform: translate(-50%, -50%);
   }
   [dir=rtl] .product-image.img-fit--contain,
   [dir=rtl] .zoom-image--contain {
     right: 50%;
     left: auto;
-    transform: translatex(50%);
+    transform: translate(50%, -50%);
   }
   .media--zoom {
     cursor: zoom-in;
