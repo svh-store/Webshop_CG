@@ -3,29 +3,39 @@
 
 <div class="pgc" id="{{ gallery_id }}">
   <div class="pgc__stage">
-    {%- if first_media -%}
-      <img class="pgc__image"
-        src="{{ first_media.preview_image | image_url: width: 900 }}"
+    {%- if first_media and first_media.preview_image -%}
+      <img
+        class="pgc__image"
+        data-media-id="{{ first_media.id }}"
+        src="{{ first_media.preview_image | image_url: width: 1200 }}"
         srcset="{{ first_media.preview_image | image_srcset }}"
-        alt="{{ first_media.alt | escape }}">
+        sizes="(min-width: 990px) 700px, 100vw"
+        alt="{{ first_media.alt | escape }}"
+        loading="eager"
+        decoding="async"
+      >
     {%- else -%}
       {{ 'image' | placeholder_svg_tag: 'media_placeholder' }}
     {%- endif -%}
   </div>
 
-  {%- if product.media.size > 1 -%}
+  {%- assign imgs = product.media -%}
+  {%- if imgs.size > 1 -%}
     <div class="pgc__thumbs" role="tablist" aria-label="Produktbilder">
-      {%- for m in product.media -%}
-        <button type="button"
-          class="pgc__thumb{% if m.id == first_media.id %} is_active{% endif %}"
+      {%- for m in imgs -%}
+        <button
+          type="button"
+          class="pgc__thumb{% if m.id == first_media.id %} is-active{% endif %}"
           aria-selected="{% if m.id == first_media.id %}true{% else %}false{% endif %}"
           data-media-id="{{ m.id }}"
-          data-media-src="{{ m.preview_image | image_url: width: 900 }}"
+          data-media-src="{{ m.preview_image | image_url: width: 1200 }}"
           data-media-srcset="{{ m.preview_image | image_srcset }}"
           data-media-alt="{{ m.alt | escape }}">
-          <img class="pgc__thumb-img"
+          <img
+            class="pgc__thumb-img"
             src="{{ m.preview_image | image_url: width: 150 }}"
-            alt="{{ m.alt | escape }}">
+            alt="{{ m.alt | escape }}"
+          >
         </button>
       {%- endfor -%}
     </div>
