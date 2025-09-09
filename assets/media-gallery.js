@@ -392,8 +392,6 @@ if (!customElements.get('media-gallery')) {
       if (this.thumbs && this.currentThumb) {
         this.checkThumbVisibilty(this.currentThumb);
       }
-
-      this.viewer.style.height = `${this.currentItem.offsetHeight}px`;
     }
 
     /**
@@ -412,8 +410,6 @@ if (!customElements.get('media-gallery')) {
       window.pauseAllMedia(this);
       this.currentItem = mediaItem;
       this.currentIndex = this.visibleItems.indexOf(this.currentItem);
-
-      this.viewer.style.height = `${this.currentItem.offsetHeight}px`;
 
       if (this.dataset.layout === 'stacked' && theme.mediaMatches.md) {
         // Update the active class and scroll to the active media
