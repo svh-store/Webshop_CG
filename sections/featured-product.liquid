@@ -46,6 +46,16 @@
 
   assign product_form_id = 'product-form-' | append: section.id
   assign first_3d_model = product.media | where: 'media_type', 'model' | first
+  assign media_ratio = section.settings.media_ratio
+
+  if media_ratio == 'natural'
+    assign media_ratio = 99
+    for media in product.media
+      if media.preview_image.aspect_ratio < media_ratio
+        assign media_ratio = media.preview_image.aspect_ratio
+      endif
+    endfor
+  endif
 
   assign color_scheme = section.settings.color_scheme
   assign bg_color = false
@@ -90,6 +100,7 @@
             {% render 'media-gallery',
               product: product,
               featured_media: featured_media,
+              media_ratio: media_ratio,
               media_crop: section.settings.media_crop,
               first_3d_model: first_3d_model,
               enable_zoom: section.settings.enable_zoom,
@@ -293,6 +304,7 @@
                   {% render 'variant-picker',
                     product: product,
                     product_form_id: product_form_id,
+                    media_ratio: media_ratio,
                     swatch_crop: section.settings.media_crop,
                     block: block
                   %}
@@ -638,6 +650,35 @@
     {
       "type": "paragraph",
       "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Media aspect ratio",
+      "info": "Natural should only be used when images are the same dimensions.",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Natural"
+        },
+        {
+          "value": "1.33",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "1.77",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "1",
+          "label": "Square"
+        },
+        {
+          "value": "0.75",
+          "label": "Portrait"
+        }
+      ],
+      "default": "natural"
     },
     {
       "type": "select",
