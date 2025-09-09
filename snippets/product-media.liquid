@@ -114,7 +114,7 @@
 {%- endcapture -%}
 
 {%- if media.media_type == 'image' -%}
-  <div class="media relative{% if settings.blend_product_images %} image-blend{% endif %}" style="padding-top: {{ 1 | divided_by: media_ratio | times: 100 }}%;">
+  <div class="media relative{% if settings.blend_product_images %} image-blend{% endif %}" style="--media-ratio: {{ media_ratio }}; padding-top: {{ 1 | divided_by: media_ratio | times: 100 }}%;">
     {%- if enable_zoom -%}
       {%- liquid
         if media_crop != "none"
@@ -154,9 +154,9 @@
   </div>
 {%- else -%}
   {%- if media.media_type == 'model' -%}
-    <product-model class="block relative no-js-hidden" style="padding-top: {{ 1 | divided_by: media_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
+    <product-model class="block relative no-js-hidden" style="--media-ratio: {{ media_ratio }}; padding-top: {{ 1 | divided_by: media_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
   {%- else -%}
-    <deferred-media class="block relative no-js-hidden" style="padding-top: {{ 1 | divided_by: media_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
+    <deferred-media class="block relative no-js-hidden" style="--media-ratio: {{ media_ratio }}; padding-top: {{ 1 | divided_by: media_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
   {%- endif -%}
 
   <button type="button" class="media-poster absolute top-0 left-0 flex justify-center items-center w-full h-full js-load-media">

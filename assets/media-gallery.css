@@ -39,6 +39,14 @@
   background-color: var(--gallery-bg-color);
 }
 
+.media-gallery__viewer .media,
+.media-gallery__viewer deferred-media,
+.media-gallery__viewer product-model {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--media-ratio);
+}
+
 .media-viewer,
 .media-thumbs {
   overflow-x: scroll;
@@ -67,6 +75,13 @@
 .media-viewer__item {
   flex: 0 0 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-viewer__item > * {
+  flex: 1 1 auto;
 }
 .media-viewer__item > deferred-media[loaded] {
   z-index: 3;
