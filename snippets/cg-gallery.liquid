@@ -1,5 +1,5 @@
 {%- assign gallery_id = section.id | append: '-gallery' -%}
-{%- assign first_media = media_items | first -%}
+{%- assign first_media = product.media | first -%}
 
 <div class="pgc" id="{{ gallery_id }}">
   <div class="pgc__stage">
@@ -9,15 +9,15 @@
         srcset="{{ first_media.preview_image | image_srcset }}"
         alt="{{ first_media.alt | escape }}">
     {%- else -%}
-      {{ 'image' | placeholder_svg_tag: 'media__placeholder' }}
+      {{ 'image' | placeholder_svg_tag: 'media_placeholder' }}
     {%- endif -%}
   </div>
 
-  {%- if media_items.size > 1 -%}
+  {%- if product.media.size > 1 -%}
     <div class="pgc__thumbs" role="tablist" aria-label="Produktbilder">
-      {%- for m in media_items -%}
+      {%- for m in product.media -%}
         <button type="button"
-          class="pgc__thumb{% if m.id == first_media.id %} is-active{% endif %}"
+          class="pgc__thumb{% if m.id == first_media.id %} is_active{% endif %}"
           aria-selected="{% if m.id == first_media.id %}true{% else %}false{% endif %}"
           data-media-id="{{ m.id }}"
           data-media-src="{{ m.preview_image | image_url: width: 900 }}"
