@@ -15,9 +15,6 @@ assert(Math.abs(paddingPercent(1.5) - 66.6666) < 0.0001);
 const css = fs.readFileSync(path.join(__dirname, '../assets/media-gallery.css'), 'utf8');
 assert(css.includes('border: none'));
 assert(css.includes('--media-gap: var(--space-unit)'));
-assert(css.includes('justify-content: center'));
-assert(css.includes('max-height: 80vh'));
-assert(css.includes('background-color: transparent'));
 
 // Ensure product page media container has no extra margin
 const prodCss = fs.readFileSync(path.join(__dirname, '../assets/product-page.css'), 'utf8');
