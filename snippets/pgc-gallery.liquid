@@ -1,12 +1,5 @@
-{%- liquid
-  assign media_items = product.media
-  if media_items.size == 0 and product.featured_image
-    assign media_items = product.images
-  endif
-
-  assign gallery_id = section.id | append: '-gallery'
-  assign first_media = media_items | first
--%}
+{%- assign gallery_id = section.id | append: '-gallery' -%}
+{%- assign first_media = media_items | first -%}
 
 <div class="pgc" id="{{ gallery_id }}">
   <div class="pgc__stage">
@@ -21,14 +14,11 @@
   </div>
 
   {%- if media_items.size > 1 -%}
-    <div class="pgc__thumbs" role="tablist" aria-label="{{ 'products.product.gallery_thumbnails' | t }}">
+    <div class="pgc__thumbs" role="tablist" aria-label="Produktbilder">
       {%- for m in media_items -%}
-        {%- liquid
-          assign is_active = m.id == first_media.id
-        -%}
         <button type="button"
-          class="pgc__thumb{% if is_active %} is-active{% endif %}"
-          aria-selected="{% if is_active %}true{% else %}false{% endif %}"
+          class="pgc__thumb{% if m.id == first_media.id %} is-active{% endif %}"
+          aria-selected="{% if m.id == first_media.id %}true{% else %}false{% endif %}"
           data-media-id="{{ m.id }}"
           data-media-src="{{ m.preview_image | image_url: width: 900 }}"
           data-media-srcset="{{ m.preview_image | image_srcset }}"
