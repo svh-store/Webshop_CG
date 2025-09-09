@@ -103,7 +103,8 @@
         "complementary_rx84bf"
       ],
       "custom_css": [
-        "h1 {font-weight: 700; font-size: 3.2rem; letter-spacing: -0.02em; color: #181c32; margin-top: 20px; margin-right: 40px; /* optional für Abstand nach unten */ line-height: 1.15;}"
+        "h1 {font-weight: 700; font-size: 3.2rem; letter-spacing: -0.02em; color: #181c32; margin-top: 20px; margin-right: 40px; /* optional für Abstand nach unten */ line-height: 1.15;}",
+        "@media (max-width: 768px) {.product h1 {font-size: 1.8rem !important; margin-right: 0 !important; }}"
       ],
       "settings": {
         "stick_on_scroll": true,
@@ -113,7 +114,7 @@
         "sticky_atc_mobile": true,
         "media_layout": "slider",
         "media_size": "default",
-        "media_ratio": "0.75",
+        "media_ratio": "1",
         "media_crop": "none",
         "enable_video_looping": false,
         "enable_zoom": false,
@@ -131,7 +132,7 @@
         "border_color": "#ffffff",
         "bg_color": "#ffffff",
         "enable_media_grouping": true,
-        "media_grouping_option": "Color,Colour,Couleur,Farbe,Apple Watch, Fitbit Modell,Armbandgröße"
+        "media_grouping_option": "Color,Colour,Couleur,Farbe,Apple Watch, Fitbit Modell,Armbandgröße,Kordelfarbe"
       }
     },
     "recommendations": {
