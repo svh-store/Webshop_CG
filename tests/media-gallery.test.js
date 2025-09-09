@@ -15,10 +15,18 @@ assert(Math.abs(paddingPercent(1.5) - 66.6666) < 0.0001);
 const css = fs.readFileSync(path.join(__dirname, '../assets/media-gallery.css'), 'utf8');
 assert(css.includes('border: none'));
 assert(css.includes('--media-gap: var(--space-unit)'));
+assert(css.includes('justify-content: center'));
+assert(css.includes('max-height: 80vh'));
 
 // Ensure product page media container has no extra margin
 const prodCss = fs.readFileSync(path.join(__dirname, '../assets/product-page.css'), 'utf8');
 assert(prodCss.includes('.product-main .product-media {\n  margin-top: 0;'));
+
+// Validate that gallery snippet uses transparent background and no media--cover wrappers
+const gallerySnippet = fs.readFileSync(path.join(__dirname, '../snippets/media-gallery.liquid'), 'utf8');
+assert(gallerySnippet.includes('--gallery-bg-color:transparent'));
+const mediaSnippet = fs.readFileSync(path.join(__dirname, '../snippets/product-media.liquid'), 'utf8');
+assert(!mediaSnippet.includes('media--cover'));
 
 console.log('media-gallery tests passed');
 
