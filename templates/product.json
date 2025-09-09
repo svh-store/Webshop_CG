@@ -112,18 +112,18 @@
         "sticky_atc_position": "end",
         "sticky_atc_mobile": true,
         "media_layout": "slider",
-        "media_size": "large",
-        "media_ratio": "1",
-        "media_crop": "top",
+        "media_size": "default",
+        "media_ratio": "natural",
+        "media_crop": "none",
         "enable_video_looping": false,
         "enable_zoom": false,
         "zoom_mode": "click",
         "enable_lightbox_mobile": false,
-        "hover_zoom": "original",
-        "stacked_scroll": "change",
+        "hover_zoom": "medium",
+        "stacked_scroll": "never",
         "underline_active": false,
         "media_arrows": "always",
-        "show_slide_count": false,
+        "show_slide_count": true,
         "media_thumbs": "desktop",
         "lightbox_thumbnails": false,
         "thumb_ratio": "1",
@@ -143,17 +143,6 @@
         "card_size_mobile": "small",
         "card_size": "small",
         "products_to_show": 8
-      }
-    },
-    "custom_liquid_Jbkb6k": {
-      "type": "custom-liquid",
-      "name": "Custom HTML/Liquid",
-      "settings": {
-        "custom_liquid": "Add HTML or Liquid code to create advanced customizations.",
-        "section_height": "default",
-        "full_width": false,
-        "dividers": "none",
-        "prevent_animation": false
       }
     },
     "1743585275ab058f49": {
@@ -177,7 +166,6 @@
   "order": [
     "main",
     "recommendations",
-    "custom_liquid_Jbkb6k",
     "1743585275ab058f49"
   ]
 }
