@@ -126,9 +126,9 @@
         endif
       -%}
 
-      <a href="{{ image_url }}" class="media--zoom media--zoom-not-loaded inline-flex overflow-hidden absolute top-0 left-0 w-full h-full js-zoom-link" target="_blank">
+      <a href="{{ image_url }}" class="media--cover media--zoom media--zoom-not-loaded inline-flex overflow-hidden absolute top-0 left-0 w-full h-full js-zoom-link" target="_blank">
     {%- else -%}
-        <div class="overflow-hidden absolute top-0 left-0 w-full h-full">
+        <div class="media--cover overflow-hidden absolute top-0 left-0 w-full h-full">
     {%- endif -%}
 
     {% render 'image',
