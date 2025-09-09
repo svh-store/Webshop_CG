@@ -49,6 +49,28 @@
   {% endif %}
   }   
 
+  @media (min-width: 768px) {
+    .grandchild-nav__image {
+      padding-bottom: 0 !important;
+      padding-top: 50% !important;
+      max-height: 160px !important;
+      height: auto !important;
+    }
+    .grandchild-nav__image img {
+      height: auto !important;
+      width: 100% !important;
+      max-height: 100% !important;
+      object-fit: contain !important;
+    }
+    .main-nav__child,
+    .mega-nav,
+    .disclosure__panel {
+      height: auto !important;
+      min-height: 0 !important;
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
 
 {%- endstyle -%}
 
