@@ -44,6 +44,7 @@
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  justify-content: center;
 }
 .media-viewer::-webkit-scrollbar,
 .media-thumbs::-webkit-scrollbar {
