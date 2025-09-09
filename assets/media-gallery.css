@@ -315,16 +315,3 @@ product-model[loaded] .media-poster {
     flex: 0 0 50%;
   }
 }
-
-/* Per-image aspect ratio support (inline --media-ratio / --thumb-ratio) */
-.media[style*="--media-ratio"],
-.media-thumbs__btn[style*="--thumb-ratio"] {
-  /* The layout already uses padding-top with absolute children.
-     No change needed for modern browsers, this is a harmless hint. */
-  aspect-ratio: auto;
-}
-
-/* Ensure contain-fit images never stretch outside their box */
-.product-image.img-fit--contain {
-  max-width: 100%;
-}
