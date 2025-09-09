@@ -27,7 +27,7 @@
     });
 
     // Variantenwechsel → Featured-Media anzeigen
-    document.addEventListener('variant:change', (e) => {
+    document.addEventListener('on:variant:change', (e) => {
       const variant = e.detail && e.detail.variant;
       if (!variant || !variant.featured_media) return;
       const targetId = String(variant.featured_media.id);
