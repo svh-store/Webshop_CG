@@ -98,6 +98,12 @@
           assign lazy_load = true
           assign select_first_image = false
 
+          # Use individual aspect ratios when natural is selected to avoid empty space
+          assign current_media_ratio = media_ratio
+          if section.settings.media_ratio == 'natural'
+            assign current_media_ratio = media.preview_image.aspect_ratio
+          endif
+
           if featured_media == null and forloop.index == 1
             assign lazy_load = false
             assign select_first_image = true
@@ -117,7 +123,7 @@
           {%- endif -%}
           {% render 'product-media',
             media: media,
-            media_ratio: media_ratio,
+            media_ratio: current_media_ratio,
             media_crop: media_crop,
             loop: section.settings.enable_video_looping,
             lazy_load: lazy_load,
