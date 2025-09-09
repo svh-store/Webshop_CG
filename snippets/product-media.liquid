@@ -24,6 +24,7 @@
 {%- endcomment -%}
 
 {%- liquid
+  assign media_ratio = media_ratio | default: media.preview_image.aspect_ratio
   if featured_product
     assign widths = '536, 800, 1072, 1280'
     assign src_width = 1280
