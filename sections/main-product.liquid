@@ -103,7 +103,7 @@
   <div class="product js-product" data-section="{{ section.id }}">
     <div id="product-media" class="product-media product-media--{{ section.settings.media_layout }}">
       {%- if product.media.size > 0 -%}
-            {% render 'pgc-gallery', product: product, section: section %}
+       {% render 'cg-gallery', product: product, section: section %}
 
  
       {%- else -%}
