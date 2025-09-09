@@ -117,8 +117,6 @@
           {%- endif -%}
           {% render 'product-media',
             media: media,
-            media_ratio: media_ratio,
-            media_crop: media_crop,
             loop: section.settings.enable_video_looping,
             lazy_load: lazy_load,
             enable_zoom: enable_zoom,
@@ -244,7 +242,7 @@
               endif
             -%}
             <li class="media-thumbs__item{% if section.settings.hide_variants and variant_images contains media.src %} media-thumbs__item--variant{% endif %}" data-media-id="{{ media.id }}">
-              <button class="media-thumbs__btn media relative w-full{% if settings.blend_product_images %} image-blend{% endif %}{% if active and section.settings.enable_media_grouping == false %} is-active{% endif %}"{% if active %} aria-current="true"{% endif %} aria-controls="gallery-viewer"{% if section.settings.thumb_ratio != 'natural' %} style="padding-top: {{ 1 | divided_by: thumb_ratio | times: 100 }}%;"{% endif %}>
+              <button class="media-thumbs__btn media relative w-full{% if settings.blend_product_images %} image-blend{% endif %}{% if active and section.settings.enable_media_grouping == false %} is-active{% endif %}"{% if active %} aria-current="true"{% endif %} aria-controls="gallery-viewer" style="padding-top: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;">
                 <span class="visually-hidden">
                   {%- if media.media_type == 'image' -%}
                     {{- 'products.product.media.load_image' | t: index: image_index -}}
@@ -267,17 +265,7 @@
 
                 {%- liquid
                   assign src_width = 80
-                  if section.settings.thumb_ratio != 'natural'
-                    if thumb_crop == 'top'
-                      assign img_class = 'img-fit object-top w-full'
-                      assign src_width = 150
-                    elsif thumb_crop == 'center'
-                      assign img_class = 'img-fit w-full'
-                      assign src_width = 150
-                    else
-                      assign img_class = 'img-fit img-fit--contain w-full'
-                    endif
-                  endif
+                  assign img_class = 'img-fit img-fit--contain w-full'
                 -%}
 
                 {% render 'image',
