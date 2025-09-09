@@ -3,7 +3,6 @@
 {{ 'product.css' | asset_url | stylesheet_tag }}
 {{ 'product-page.css' | asset_url | stylesheet_tag }}
 
-
 {%- assign messages = section.blocks | where: "type", "message" -%}
 {%- if messages -%}
   <script src="{{ 'product-message.js' | asset_url }}" defer="defer"></script>
@@ -50,7 +49,17 @@
 
   assign product_form_id = 'product-form-' | append: section.id
   assign first_3d_model = product.media | where: 'media_type', 'model' | first
+  assign media_ratio = section.settings.media_ratio
   assign thumb_ratio = section.settings.thumb_ratio
+
+  if media_ratio == 'natural'
+    assign media_ratio = 99
+    for media in product.media
+      if media.preview_image.aspect_ratio < media_ratio
+        assign media_ratio = media.preview_image.aspect_ratio
+      endif
+    endfor
+  endif
 
   if thumb_ratio == 'natural'
     assign thumb_ratio = 99
@@ -75,7 +84,7 @@
 
   {%- if section.settings.media_size == 'large' -%}
     @media (min-width: {{ breakpoint_lg }}px) {
-      :root { --product-info-width: 800px !important; }
+      :root { --product-info-width: 400px !important; }
     }
   {%- endif -%}
 {%- endstyle -%}
@@ -93,6 +102,7 @@
         {% render 'media-gallery',
           product: product,
           featured_media: featured_media,
+          media_ratio: media_ratio,
           media_crop: section.settings.media_crop,
           thumb_ratio: thumb_ratio,
           thumb_crop: section.settings.thumb_crop,
@@ -110,7 +120,8 @@
     </div>
 
     <div class="product-info{% if section.settings.stick_on_scroll %} product-info--sticky{% endif %}"
-         {% if section.settings.stick_on_scroll %}data-sticky-height-elems="#product-media"{% endif %}>
+         id="product-info-{{ section.id }}"
+         {% if section.settings.stick_on_scroll %}data-sticky-height-elems="#product-media,.cc-main-product + .cc-product-details .container"{% endif %}>
       {%- if section.settings.stick_on_scroll -%}
       <script src="{{ 'sticky-scroll-direction.js' | asset_url }}" defer="defer"></script>
       <sticky-scroll-direction data-min-sticky-size="md">
@@ -122,7 +133,6 @@
         <a class="product-options--anchor" id="product-info" rel="nofollow"></a>
       {%- endif -%}
 
-      <div class="product-info-card">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when '@app' -%}
@@ -208,7 +218,7 @@
 
           {%- when 'price' -%}
             <div class="product-info__block product-info__block--sm product-price" {{ block.shopify_attributes }}>
-              <div class="product-info__price">
+              <div class="product-info__price" role="status">
                 {% render 'price', product: product, use_variant: true %}
               </div>
 
@@ -253,6 +263,7 @@
                   product: product,
                   product_form_id: product_form_id,
                   block: block,
+                  media_ratio: media_ratio,
                   swatch_crop: section.settings.media_crop,
                   update_url: true
                 %}
@@ -297,7 +308,7 @@
 
                   <div class="alert mb-8 bg-error-bg text-error-text js-form-error text-start" role="alert" hidden></div>
 
-                  <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
+                  <input type="hidden" name="id" value="{{ current_variant.id }}">
                   <div class="product-info__add-to-cart flex{% if enable_dynamic_checkout %} qty-input--secondary-btn{% endif %}">
                     {%- if block.settings.show_qty_selector -%}
                       {% render 'quantity-input', layout_style: "combined" %}
@@ -323,8 +334,6 @@
                           {{- 'products.product.sold_out' | t -}}
                         {%- endif -%}
                       </button>
-
-                      {% render 'sledge-wishlist-button-detail', product: product %}
                     </div>
                   </div>
 
@@ -475,7 +484,13 @@
             <div class="product-info__block" {{ block.shopify_attributes }}>
               <div class="social-share flex items-center">
                 <p class="social-share__heading mb-0 font-bold">{{ 'general.social.share_heading' | t }}:</p>
-                {% render 'social-share', share_title: product.title, share_url: product.url, share_image: product %}
+                {% render 'social-share', 
+                  share_twitter: block.settings.show_twitter,
+                  share_facebook: block.settings.show_facebook,
+                  share_pinterest: block.settings.show_pinterest,
+                  share_title: product.title, 
+                  share_url: product.url, 
+                  share_image: product %}
               </div>
             </div>
 
@@ -612,6 +627,12 @@
                   </div>
                 {%- endif -%}
               {%- endfor -%}
+
+              {%- if section.settings.select_first_variant == false -%}
+                <div class="variant-label js-variant-label" hidden data-variant-id="">
+                  {% render 'product-label', product: product, is_product_card: false, limit: 99, show_variant_icon: block.settings.show_variant_icon %}
+                </div>
+              {%- endif -%}
             {%- endcapture -%}
 
             {%- if variant_labels != blank -%}
@@ -672,8 +693,6 @@
             {%- endif -%}
         {%- endcase -%}
       {%- endfor -%}
-     
-      </div>
 
       {%- if section.settings.stick_on_scroll -%}
         </div>
@@ -841,6 +860,35 @@
         }
       ],
       "default": "default"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Media aspect ratio",
+      "info": "Natural should only be used when images are the same dimensions.",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Natural"
+        },
+        {
+          "value": "1.33",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "1.77",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "1",
+          "label": "Square"
+        },
+        {
+          "value": "0.75",
+          "label": "Portrait"
+        }
+      ],
+      "default": "1"
     },
     {
       "type": "select",
@@ -1716,6 +1764,26 @@
     {
       "type": "share",
       "name": "Share",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_twitter",
+          "label": "Show X (formerly Twitter)",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_facebook",
+          "label": "Show Facebook",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_pinterest",
+          "label": "Show Pinterest",
+          "default": true
+        }
+      ],
       "limit": 1
     },
     {
