@@ -223,16 +223,17 @@ product-model[loaded] .media-poster {
   }
   .product-image.img-fit--contain,
   .zoom-image--contain {
+    top: 50%;
     left: 50%;
     width: auto;
     height: 100%;
-    transform: translatex(-50%);
+    transform: translate(-50%, -50%);
   }
   [dir=rtl] .product-image.img-fit--contain,
   [dir=rtl] .zoom-image--contain {
     right: 50%;
     left: auto;
-    transform: translatex(50%);
+    transform: translate(50%, -50%);
   }
   .media--zoom {
     cursor: zoom-in;
