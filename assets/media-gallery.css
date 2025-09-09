@@ -242,6 +242,24 @@ product-model[loaded] .media-poster {
 @media (min-width: 769px) {
   .media-gallery {
     --media-gap: calc(3 * var(--space-unit));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .media-gallery__viewer {
+    max-width: 800px;
+    max-height: 80vh;
+    margin: 0 auto;
+  }
+  .media-gallery__viewer .media {
+    max-height: 80vh;
+  }
+  .media-gallery__thumbs {
+    width: 100%;
+  }
+  .media-gallery__thumbs .media-thumbs {
+    justify-content: center;
+    gap: var(--space-unit);
   }
   .media--zoom {
     cursor: zoom-in;
@@ -294,18 +312,10 @@ product-model[loaded] .media-poster {
   .product-media--stacked .media--zoom:hover .zoom-image {
     display: block;
   }
-  .media--cover {
-    top: -1px;
-    right: -1px;
-    bottom: -1px;
-    left: -1px;
-    width: auto;
-    height: auto;
-  }
-  .product-media--stacked .media-viewer__item .media::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
+    .product-media--stacked .media-viewer__item .media::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
     left: 0;
     width: 0;
     height: 2px;
