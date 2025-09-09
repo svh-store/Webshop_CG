@@ -52,24 +52,6 @@
   assign first_3d_model = product.media | where: 'media_type', 'model' | first
   assign media_ratio = section.settings.media_ratio
   assign thumb_ratio = section.settings.thumb_ratio
-
-  if media_ratio == 'natural'
-    assign media_ratio = 99
-    for media in product.media
-      if media.preview_image.aspect_ratio < media_ratio
-        assign media_ratio = media.preview_image.aspect_ratio
-      endif
-    endfor
-  endif
-
-  if thumb_ratio == 'natural'
-    assign thumb_ratio = 99
-    for media in product.media
-      if media.preview_image.aspect_ratio < thumb_ratio
-        assign thumb_ratio = media.preview_image.aspect_ratio
-      endif
-    endfor
-  endif
 -%}
 
 {%- style -%}
