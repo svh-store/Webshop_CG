@@ -84,7 +84,7 @@
       data-no-selected-variant="true"
     {% endunless %}
     aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
-    style="--gallery-bg-color:transparent;--gallery-border-color:transparent;">
+    style="--gallery-bg-color:{{ section.settings.bg_color }};--gallery-border-color:{{ section.settings.border_color }};">
   <a class="skip-link btn btn--primary visually-hidden" href="#product-info-{{ section.id }}">
     {{- 'accessibility.skip_to_product_info' | t -}}
   </a>
