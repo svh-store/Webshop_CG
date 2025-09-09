@@ -4,8 +4,8 @@
 }
 
 .product-main .product-media {
-  margin-top: calc(5 * var(--space-unit));
-  margin-bottom: calc(5 * var(--space-unit));
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .product-details__calc .h4 {
@@ -52,8 +52,8 @@
   .product-main .product-media {
     margin-top: 0;
     margin-bottom: 0;
-    padding-top: calc(10 * var(--space-unit));
-    padding-bottom: calc(10 * var(--space-unit));
+    padding-top: 0;
+    padding-bottom: 0;
     padding-inline-end: var(--product-column-padding);
   }
   .product-main .product-info {
@@ -101,9 +101,11 @@
   :root {
     --product-column-padding: calc(12 * var(--space-unit));
   }
-  .product-main .product-media,
   .product-main .product-info {
     padding-top: calc(12 * var(--space-unit));
+  }
+  .product-main .product-media {
+    padding-top: 0;
   }
 }
 

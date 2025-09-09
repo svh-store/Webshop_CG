@@ -27,16 +27,16 @@
 }
 
 .media-gallery {
-  --media-gap: calc(2 * var(--space-unit));
-  --media-gutter: calc(4 * var(--space-unit));
+  --media-gap: var(--space-unit);
+  --media-gutter: 0;
 }
 .media-gallery .skip-link.btn {
   left: 16px;
 }
 
 .media-gallery__viewer {
-  border: 1px solid var(--gallery-border-color);
-  background-color: var(--gallery-bg-color);
+  border: none;
+  background-color: transparent;
 }
 
 .media-viewer,
@@ -56,7 +56,7 @@
 }
 .media-viewer__item:not(:last-child),
 .media-thumbs__item:not(:last-child) {
-  margin-inline-end: var(--media-gap);
+  margin-inline-end: 0;
 }
 
 .media-viewer__item--variant:not(:first-child),
@@ -67,6 +67,10 @@
 .media-viewer__item {
   flex: 0 0 100%;
   text-align: center;
+  padding: 0;
+}
+.media-viewer__item:not(:last-child) {
+  margin-bottom: var(--media-gap);
 }
 .media-viewer__item > deferred-media[loaded] {
   z-index: 3;
@@ -267,21 +271,21 @@ product-model[loaded] .media-poster {
   }
   .product-media--stacked .media-viewer {
     flex-wrap: wrap;
-    margin: 0 calc(var(--media-gap) * -1) calc(var(--media-gap) * -1) 0;
+    margin: 0;
   }
   .product-media--stacked .media-gallery__viewer {
     border: 0;
     background-color: transparent;
   }
   .product-media--stacked .media-viewer__item {
-    margin: 0;
-    padding: 0 var(--media-gap) var(--media-gap) 0;
+    margin: 0 0 var(--media-gap) 0;
+    padding: 0;
   }
   .product-media--stacked .media-viewer__item .media,
   .product-media--stacked .media-viewer__item deferred-media,
   .product-media--stacked .media-viewer__item product-model {
-    border: 1px solid var(--gallery-border-color);
-    background-color: var(--gallery-bg-color);
+    border: none;
+    background-color: transparent;
   }
   .product-media--stacked .zoom-image {
     display: none;
@@ -311,12 +315,12 @@ product-model[loaded] .media-poster {
 }
 @media (min-width: 1024px) {
   .media-gallery {
-    --media-gutter: calc(6 * var(--space-unit));
+    --media-gutter: 0;
   }
   .media-thumbs__item {
     flex: 0 0 80px;
   }
   .product-media--stacked .media-viewer__item:not(.media-viewer__item--single) {
-    flex: 0 0 50%;
+    flex: 0 0 100%;
   }
 }
