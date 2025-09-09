@@ -110,6 +110,11 @@
           if forloop.index == 1
             assign lazy_load = false
           endif
+
+          assign current_ratio = media_ratio
+          if media_ratio == 'natural'
+            assign current_ratio = media.preview_image.aspect_ratio
+          endif
         -%}
         <li class="media-viewer__item{% if media.id == featured_media.id or select_first_image %} is-current-variant{% endif %}{% if section.settings.hide_variants and variant_images contains media.src %} media-viewer__item--variant{% endif %}{% if section.settings.media_layout == 'stacked' and media.id == featured_media.id %}{% if underline_active and section.settings.enable_media_grouping == false %} is-active{% endif %}{% endif %}{% if media_count == 1 %} media-viewer__item--single{% endif %}" data-media-id="{{ media.id }}" data-media-type="{{ media.media_type }}">
           {%- if enable_zoom and lightbox_enabled and media.media_type == 'image' -%}
@@ -117,7 +122,7 @@
           {%- endif -%}
           {% render 'product-media',
             media: media,
-            media_ratio: media_ratio,
+            media_ratio: current_ratio,
             media_crop: media_crop,
             loop: section.settings.enable_video_looping,
             lazy_load: lazy_load,
