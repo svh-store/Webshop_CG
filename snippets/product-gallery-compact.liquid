@@ -1,0 +1,60 @@
+{%- liquid
+  assign gallery_id = section.id | append: '-gallery'
+  assign media_items = product.media
+  if media_items.size == 0 and product.featured_image
+    assign media_items = product.images
+  endif
+-%}
+
+<div class="pgc" id="{{ gallery_id }}" data-product-handle="{{ product.handle }}">
+  <!-- Hauptbild -->
+  <figure class="pgc__stage" role="group" aria-label="{{ product.title | escape }}">
+    {%- assign first_media = media_items | first -%}
+    {%- if first_media -%}
+      <img
+        class="pgc__image"
+        src="{{ first_media | image_url: width: 1400 }}"
+        srcset="
+          {{ first_media | image_url: width: 480  }} 480w,
+          {{ first_media | image_url: width: 800  }} 800w,
+          {{ first_media | image_url: width: 1100 }} 1100w,
+          {{ first_media | image_url: width: 1400 }} 1400w
+        "
+        sizes="(max-width: 768px) 100vw, 640px"
+        alt="{{ first_media.alt | default: product.title | escape }}"
+        loading="eager"
+        data-media-id="{{ first_media.id }}"
+      >
+    {%- endif -%}
+  </figure>
+
+  <!-- Thumbnails -->
+  {%- if media_items.size > 1 -%}
+    <div class="pgc__thumbs" role="tablist" aria-label="Produktbilder">
+      {%- for m in media_items -%}
+        <button
+          type="button"
+          class="pgc__thumb{% if forloop.first %} is-active{% endif %}"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-media-id="{{ m.id }}"
+          data-media-src="{{ m | image_url: width: 1400 }}"
+          data-media-srcset="
+            {{ m | image_url: width: 480  }} 480w,
+            {{ m | image_url: width: 800  }} 800w,
+            {{ m | image_url: width: 1100 }} 1100w,
+            {{ m | image_url: width: 1400 }} 1400w
+          "
+          data-media-alt="{{ m.alt | default: product.title | escape }}"
+        >
+          <img
+            class="pgc__thumb-img"
+            src="{{ m | image_url: width: 160, height: 160, crop: 'center' }}"
+            alt="{{ m.alt | default: product.title | escape }}"
+            loading="lazy"
+          >
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
