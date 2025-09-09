@@ -1,0 +1,33 @@
+{%- assign gallery_id = section.id | append: '-gallery' -%}
+{%- assign first_media = product.media | first -%}
+
+<div class="pgc" id="{{ gallery_id }}">
+  <div class="pgc__stage">
+    {%- if first_media -%}
+      <img class="pgc__image"
+        src="{{ first_media.preview_image | image_url: width: 900 }}"
+        srcset="{{ first_media.preview_image | image_srcset }}"
+        alt="{{ first_media.alt | escape }}">
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'media_placeholder' }}
+    {%- endif -%}
+  </div>
+
+  {%- if product.media.size > 1 -%}
+    <div class="pgc__thumbs" role="tablist" aria-label="Produktbilder">
+      {%- for m in product.media -%}
+        <button type="button"
+          class="pgc__thumb{% if m.id == first_media.id %} is_active{% endif %}"
+          aria-selected="{% if m.id == first_media.id %}true{% else %}false{% endif %}"
+          data-media-id="{{ m.id }}"
+          data-media-src="{{ m.preview_image | image_url: width: 900 }}"
+          data-media-srcset="{{ m.preview_image | image_srcset }}"
+          data-media-alt="{{ m.alt | escape }}">
+          <img class="pgc__thumb-img"
+            src="{{ m.preview_image | image_url: width: 150 }}"
+            alt="{{ m.alt | escape }}">
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
