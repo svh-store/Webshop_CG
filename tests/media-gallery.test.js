@@ -20,7 +20,14 @@ assert(css.includes('justify-content: center'));
 
 // Ensure product page media container has no extra margin
 const prodCss = fs.readFileSync(path.join(__dirname, '../assets/product-page.css'), 'utf8');
-assert(prodCss.includes('.product-main .product-media {\n  margin-top: 0;'));
+assert(prodCss.includes('.product-main .product-media {\n    margin-top: 0;'));
+
+// Ensure gallery reacts to variant changes
+const pgcJs = fs.readFileSync(
+  path.join(__dirname, '../assets/product-gallery-compact.js'),
+  'utf8'
+);
+assert(pgcJs.includes('on:variant:change'));
 
 console.log('media-gallery tests passed');
 
