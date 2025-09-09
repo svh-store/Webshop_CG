@@ -1,0 +1,65 @@
+{%- assign gallery_id = section.id | append: '-gallery' -%}
+{%- assign media_list = product.media -%}
+{%- assign first_media = media_list | first -%}
+{{ 'arktis-gallery.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'arktis-gallery.js' | asset_url }}" defer></script>
+
+<div class="ag" id="{{ gallery_id }}" data-product-handle="{{ product.handle }}">
+  <div class="ag_grid">
+    {%- if media_list.size > 1 -%}
+      <div class="ag_thumbs" role="tablist" aria-label="{{ 'products.product.gallery_thumbnails' | t }}">
+        {%- for m in media_list -%}
+          {%- assign is_active = m.id == first_media.id -%}
+          <button
+            type="button"
+            class="ag_thumb{% if is_active %} is-active{% endif %}"
+            aria-selected="{% if is_active %}true{% else %}false{% endif %}"
+            aria-controls="ag_stage-{{ gallery_id }}"
+            data-media-id="{{ m.id }}"
+            {%- if m.media_type == 'image' -%}
+              data-src="{{ m.preview_image | image_url: width: 1600 }}"
+              data-srcset="{{ m.preview_image | image_srcset }}"
+              data-alt="{{ m.alt | escape }}"
+              data-kind="image"
+            {%- elsif m.media_type == 'video' or m.media_type == 'external_video' -%}
+              data-kind="video"
+              data-video-id="media-{{ m.id }}"
+            {%- endif -%}
+          >
+            {%- if m.media_type == 'image' -%}
+              {{ m.preview_image | image_url: width: 180 | image_tag: class: 'ag_thumb-img', alt: m.alt }}
+            {%- else -%}
+              {{ m.preview_image | image_url: width: 180 | image_tag: class: 'ag_thumb-img', alt: m.alt }}
+              <span class="ag_thumb-badge" aria-hidden="true">\u25B6</span>
+            {%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ag_stage-wrap">
+      <div class="ag_stage" id="ag_stage-{{ gallery_id }}">
+        {%- if first_media -%}
+          {%- if first_media.media_type == 'image' -%}
+            <img
+              class="ag_image"
+              data-media-id="{{ first_media.id }}"
+              src="{{ first_media.preview_image | image_url: width: 1600 }}"
+              srcset="{{ first_media.preview_image | image_srcset }}"
+              sizes="(min-width: 1200px) 900px, (min-width: 990px) 700px, 100vw"
+              alt="{{ first_media.alt | escape }}"
+              loading="eager"
+              decoding="async"
+            >
+          {%- elsif first_media.media_type == 'video' -%}
+            {{ first_media | media_tag: class: 'ag_video', image_size: '1600x', autoplay: false, loop: false, controls: true, preload: 'metadata' }}
+          {%- elsif first_media.media_type == 'external_video' -%}
+            {{ first_media | media_tag: class: 'ag_video', autoplay: false, loop: false, controls: true }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'ag_image' }}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
