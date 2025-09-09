@@ -3,7 +3,6 @@
 {%- comment -%}
   Parameters:
   - product {Object} - Product object.
-  - media_ratio {Number} - Media aspect ratio.
   - featured_media {Object} - product.featured_media object to show
   - media_crop {String} - If media should crop to fill available spacfe (Options: none, top, center)
   - first_3d_model {Boolean} - First 3d model (if applicable).
@@ -16,7 +15,6 @@
   Usage:
   {% render 'media-gallery',
     product: product,
-    media_ratio: section.settings.media_ratio,
     media_crop: 'top',
     thumb_ratio: thumb_ratio,
     thumb_crop: section.settings.thumb_crop,
@@ -117,7 +115,7 @@
           {%- endif -%}
           {% render 'product-media',
             media: media,
-            media_ratio: media_ratio,
+            media_ratio: media.preview_image.aspect_ratio,
             media_crop: media_crop,
             loop: section.settings.enable_video_looping,
             lazy_load: lazy_load,
