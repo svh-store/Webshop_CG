@@ -135,3 +135,43 @@
 .product-info-card > .product-info__block:last-child {
   margin-bottom: 0;
 }
+
+:root {
+  --sticky-top: var(--header-end, 0);
+}
+
+@media (min-width: 990px) {
+  .pdp-pair {
+    position: relative;
+    display: flex;
+    gap: var(--product-column-padding, 32px);
+  }
+  .pdp-col {
+    position: relative;
+    flex: 1 1 auto;
+  }
+  .pdp-col--info {
+    flex: 0 0 var(--product-info-width);
+  }
+  .pdp-col--info .product-info,
+  .pdp-col--info .product-info__sticky,
+  .pdp-col--info sticky-scroll-direction {
+    position: static;
+    height: 100%;
+  }
+  .pdp-sticky {
+    position: sticky;
+    top: var(--sticky-top);
+  }
+  .pdp-sticky.pdp-locked {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+  }
+}
+
+@media (max-width: 989px) {
+  .pdp-col {
+    height: auto !important;
+  }
+}
