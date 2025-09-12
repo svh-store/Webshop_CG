@@ -101,11 +101,13 @@
 {%- endif -%}
 
 <div class="container">
-  <div id="pdpPair">
-    <div class="product js-product" data-section="{{ section.id }}">
+  <div class="product js-product" data-section="{{ section.id }}">
 
       {%- if product.media.size > 0 -%}
-        {% render 'arktis-gallery', product: product, section: section %}
+    {% render 'arktis-gallery', product: product, section: section %}
+
+
+ 
       {%- else -%}
         <div class="media relative">
           {{ 'image' | placeholder_svg_tag: 'media__placeholder' }}
@@ -113,7 +115,14 @@
       {%- endif -%}
     </div>
 
-    <div id="pdpInfo" class="product-info">
+    <div class="product-info{% if section.settings.stick_on_scroll %} product-info--sticky{% endif %}"
+         {% if section.settings.stick_on_scroll %}data-sticky-height-elems="#product-media"{% endif %}>
+      {%- if section.settings.stick_on_scroll -%}
+      <script src="{{ 'sticky-scroll-direction.js' | asset_url }}" defer="defer"></script>
+      <sticky-scroll-direction data-min-sticky-size="md">
+        <div class="product-info__sticky">
+      {%- endif -%}
+
       {%- assign has_variant_picker = false -%}
       {%- if section.settings.sticky_atc_panel -%}
         <a class="product-options--anchor" id="product-info" rel="nofollow"></a>
@@ -670,8 +679,13 @@
             {%- endif -%}
         {%- endcase -%}
       {%- endfor -%}
-
+     
       </div>
+
+      {%- if section.settings.stick_on_scroll -%}
+        </div>
+      </sticky-scroll-direction>
+      {%- endif -%}
     </div>
   </div>
 </div>
