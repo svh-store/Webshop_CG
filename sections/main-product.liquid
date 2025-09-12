@@ -32,7 +32,6 @@
 {%- endif -%}
 
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'pdp-sticky.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   # constants
@@ -102,22 +101,27 @@
 {%- endif -%}
 
 <div class="container">
-  <div id="pdpPair">
-    <div class="product js-product" data-section="{{ section.id }}">
+  <div class="product js-product" data-section="{{ section.id }}">
 
-        {%- if product.media.size > 0 -%}
-      {% render 'arktis-gallery', product: product, section: section %}
-
+      {%- if product.media.size > 0 -%}
+    {% render 'arktis-gallery', product: product, section: section %}
 
 
-        {%- else -%}
-          <div class="media relative">
-            {{ 'image' | placeholder_svg_tag: 'media__placeholder' }}
-          </div>
-        {%- endif -%}
-      </div>
+ 
+      {%- else -%}
+        <div class="media relative">
+          {{ 'image' | placeholder_svg_tag: 'media__placeholder' }}
+        </div>
+      {%- endif -%}
+    </div>
 
-      <div class="product-info">
+    <div class="product-info{% if section.settings.stick_on_scroll %} product-info--sticky{% endif %}"
+         {% if section.settings.stick_on_scroll %}data-sticky-height-elems="#product-media"{% endif %}>
+      {%- if section.settings.stick_on_scroll -%}
+      <script src="{{ 'sticky-scroll-direction.js' | asset_url }}" defer="defer"></script>
+      <sticky-scroll-direction data-min-sticky-size="md">
+        <div class="product-info__sticky">
+      {%- endif -%}
 
       {%- assign has_variant_picker = false -%}
       {%- if section.settings.sticky_atc_panel -%}
@@ -677,6 +681,11 @@
       {%- endfor -%}
      
       </div>
+
+      {%- if section.settings.stick_on_scroll -%}
+        </div>
+      </sticky-scroll-direction>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -744,6 +753,13 @@
   "name": "Product",
   "class": "cc-main-product product-main",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "stick_on_scroll",
+      "label": "Stick product info on scroll",
+      "info": "Applies to large screens only.",
+      "default": true
+    },
     {
       "type": "checkbox",
       "id": "select_first_variant",
