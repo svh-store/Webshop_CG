@@ -135,12 +135,16 @@
 
   #pdpGallery,
   #pdpInfo {
-    position: sticky;
-    top: var(--header-end-padded, 48px);
     width: auto;
     float: none;
     padding-top: 0;
     padding-bottom: 0;
+  }
+
+  #pdpGallery.is-sticky,
+  #pdpInfo.is-sticky {
+    position: sticky;
+    top: var(--header-end-padded);
   }
 
   #pdpGallery {
